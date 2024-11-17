@@ -37,6 +37,7 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/MiCkEyZzZ/tochka/tochka"
 )
 
@@ -59,6 +60,7 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/MiCkEyZzZ/tochka/tochka"
 )
 
