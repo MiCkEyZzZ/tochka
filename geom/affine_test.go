@@ -1,4 +1,4 @@
-package tochka
+package geom
 
 import (
 	"math"
