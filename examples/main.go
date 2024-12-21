@@ -3,13 +3,13 @@ package main
 import (
 	"fmt"
 
-	"github.com/MiCkEyZzZ/tochka/geom"
+	"github.com/MiCkEyZzZ/tochka"
 )
 
 func main() {
 	// Создание новых точек.
-	p1 := geom.NewPoint(2.5, 3.5)
-	p2 := geom.NewPoint(1.0, 1.0)
+	p1 := tochka.NewPoint(2.5, 3.5)
+	p2 := tochka.NewPoint(1.0, 1.0)
 
 	fmt.Println("Точка 1:", p1)
 	fmt.Println("Точка 2:", p2)
