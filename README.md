@@ -38,12 +38,12 @@ package main
 import (
 	"fmt"
 
-	"github.com/MiCkEyZzZ/tochka/tochka"
+	"github.com/MiCkEyZzZ/tochka/geom"
 )
 
 func main() {
-	p1 := tochka.NewPoint(2.5, 3.7)
-	p2 := tochka.NewPoint(1.2, -0.5)
+	p1 := geom.NewPoint(2.5, 3.7)
+	p2 := geom.NewPoint(1.2, -0.5)
 
 	sum := p1.Add(p2)
 	fmt.Println("Сумма точек:", sum)
@@ -68,13 +68,13 @@ package main
 import (
 	"fmt"
 
-	"github.com/MiCkEyZzZ/tochka/tochka"
+	"github.com/MiCkEyZzZ/tochka/geom"
 )
 
 func main() {
-	transform := tochka.NewAffine2D(1, 0, 10, 0, 1, 20) // Сдвиг на (10, 20)
+	transform := geom.NewAffine2D(1, 0, 10, 0, 1, 20) // Сдвиг на (10, 20)
 
-	point := tochka.NewPoint(5, 5)
+	point := geom.NewPoint(5, 5)
 	transformed := transform.Transform(point)
 
 	fmt.Println("Исходная точка:", point)
