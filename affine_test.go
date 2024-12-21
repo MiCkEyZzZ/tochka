@@ -67,7 +67,7 @@ func TestAffine2D_Transform(t *testing.T) {
 	}
 }
 
-// TestAffine2D_Mul умножение двух матриц для проверки работы метода Mul()
+// TestAffine2D_Mul умножение двух матриц для проверки работы метода Mul().
 func TestAffine2D_Mul(t *testing.T) {
 	a := NewAffine2D(4, 0, 3, 0, 4, 3)
 	b := NewAffine2D(2, 0, 2, 0, 2, 2)
