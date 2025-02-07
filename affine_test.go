@@ -78,3 +78,47 @@ func TestAffine2D_Mul(t *testing.T) {
 		t.Errorf("Mul failed. Expected %v, got %v", expected, result)
 	}
 }
+
+// TestSplit проверяет метод Split() для разделения матрицы на линейную часть и смещение.
+func TestSplit(t *testing.T) {
+	a := NewAffine2D(2, 1, 3, 1, 2, 4)
+	mat, off := a.Split()
+	expectedMat := NewAffine2D(2, 1, 0, 1, 2, 0)
+	expectedOff := Point{X: 3, Y: 4}
+	if mat != expectedMat || off != expectedOff {
+		t.Errorf("Split failed: got mat %+v, offset %+v", mat, off)
+	}
+}
+
+// TestShear проверяет метод Shear() для наклона матрицы.
+func TestShare(t *testing.T) {
+	a := NewAffine2D(1, 0, 0, 0, 1, 0)
+	b := a.Shear(Point{X: 0, Y: 0}, float32(math.Pi/6), float32(math.Pi/6))
+	if !almostEqual(b.b, float32(math.Tan(math.Pi/6)), 1e-6) {
+		t.Errorf("Shear failed: got %+v", b)
+	}
+}
+
+// TestElems проверяет метод Elems() для получения элементов матрицы.
+func TestElems(t *testing.T) {
+	a := NewAffine2D(2, 1, 3, 1, 2, 4)
+	sx, hx, ox, hy, sy, oy := a.Elems()
+	if sx != 2 || hx != 1 || ox != 3 || hy != 1 || sy != 2 || oy != 4 {
+		t.Errorf("Elems failed: got %v, %v, %v, %v, %v, %v", sx, hx, ox, hy, sy, oy)
+	}
+}
+
+// TestAffineString проверяет метод String() для строкового представления матрицы.
+func TestAffineString(t *testing.T) {
+	a := NewAffine2D(1, 0, 2, 0, 1, 3)
+	str := a.String()
+	expected := "[[1 0 2] [0 1 3]]"
+	if str != expected {
+		t.Errorf("String failed: expected %s, got %s", expected, str)
+	}
+}
+
+// almostEqual сравнивает два значения с учётом заданной точности.
+func almostEqual(a, b float32, epsilon float32) bool {
+	return math.Abs(float64(a-b)) < float64(epsilon)
+}
