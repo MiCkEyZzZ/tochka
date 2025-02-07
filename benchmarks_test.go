@@ -32,6 +32,7 @@ func BenchmarkElems(b *testing.B) {
 	}
 }
 
+// BenchmarkAffineString измеряет производительность метода String().
 func BenchmarkAffineString(b *testing.B) {
 	a := NewAffine2D(1, 0, 2, 0, 1, 3)
 	b.ResetTimer()
