@@ -72,7 +72,7 @@ func TestAffine2D_Mul(t *testing.T) {
 	a := NewAffine2D(4, 0, 3, 0, 4, 3)
 	b := NewAffine2D(2, 0, 2, 0, 2, 2)
 	result := a.Mul(b)
-	expected := NewAffine2D(8, 0, 7, 0, 8, 7)
+	expected := NewAffine2D(8, 0, 11, 0, 8, 11)
 
 	if result != expected {
 		t.Errorf("Mul failed. Expected %v, got %v", expected, result)
