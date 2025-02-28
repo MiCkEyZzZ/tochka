@@ -41,4 +41,20 @@ func main() {
 
 	// Строковое представление точки
 	fmt.Println("Строковое представление точки 1:", p1)
+
+	// Скалярное произведение
+	dotProduct := p1.Dot(p2)
+	fmt.Println("Скалярное произведение:", dotProduct)
+
+	// Псевдовекторное произведение
+	crossProduct := p1.Cross(p2)
+	fmt.Println("Псевдовекторное произведение:", crossProduct)
+
+	// Длина вектора p1
+	magnitude1 := p1.Magnitude()
+	fmt.Println("Длина вектора p1:", magnitude1)
+
+	// Длина вектора p2
+	magnitude2 := p2.Magnitude()
+	fmt.Println("Длина вектора p2:", magnitude2)
 }

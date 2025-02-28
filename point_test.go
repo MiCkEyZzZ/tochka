@@ -99,3 +99,38 @@ func TestString(t *testing.T) {
 		t.Errorf("String() = %v; want %v", result2, expected2)
 	}
 }
+
+// TestDot проверяет вычисление скалярного произведения двух точек.
+func TestDot(t *testing.T) {
+	p1 := NewPoint(1, 2)
+	p2 := NewPoint(3, 4)
+	res := p1.Dot(p2)
+	expected := float32(11)
+
+	if res != expected {
+		t.Errorf("Dot() = %v; want %v", res, expected)
+	}
+}
+
+// TestCross проверяет вычисление псевдовекторного произведения (детерминанта) двух точек.
+func TestCross(t *testing.T) {
+	p1 := NewPoint(1, 2)
+	p2 := NewPoint(3, 4)
+	res := p1.Cross(p2)
+	expected := float32(-2)
+
+	if res != expected {
+		t.Errorf("Cross() = %v; want %v", res, expected)
+	}
+}
+
+// TestMagnitude проверяет вычисление длины вектора.
+func TestMagnitude(t *testing.T) {
+	p := NewPoint(3, 4)
+	res := p.Magnitude()
+	expected := float32(5)
+
+	if res != expected {
+		t.Errorf("Magnitude() = %v; want %v", res, expected)
+	}
+}
