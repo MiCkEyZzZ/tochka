@@ -47,6 +47,21 @@ func (p Point) Distance(point Point) float32 {
 	return float32(math.Sqrt(float64(dx*dx + dy*dy)))
 }
 
+// Dot возвращает скалярное произведение двух векторов.
+func (p Point) Dot(point Point) float32 {
+	return p.X*point.X + p.Y*point.Y
+}
+
+// Cross возвращает псевдовекторное произведение (детерминант) двух векторов в 2М.
+func (p Point) Cross(point Point) float32 {
+	return p.X*point.Y - p.Y*point.X
+}
+
+// Magnitude возвращает длину вектора.
+func (p Point) Magnitude() float32 {
+	return float32(math.Sqrt(float64(p.X*p.X + p.Y*p.Y)))
+}
+
 // Round округляет координаты точки до ближайших целых значений и возвращает объект image.Point.
 func (p Point) Round() image.Point {
 	return image.Point{
