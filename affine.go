@@ -33,6 +33,13 @@ func (a Affine2D) Offset(offset Point) Affine2D {
 	}
 }
 
+// OffsetInPlace сдвигает матрицу на месте.
+// offset определяет величину сдвига по осям X и Y.
+func (a *Affine2D) OffsetInPlace(offset Point) {
+	a.c += offset.X
+	a.f += offset.Y
+}
+
 // Scale выполняет масштабирование матрицы относительно заданной точки.
 // origin задаёт точку, вокруг которой выполняется масштабирование.
 // factor задаёт коэффициенты масштабирования по X и Y.
@@ -46,6 +53,13 @@ func (a Affine2D) Scale(origin, factor Point) Affine2D {
 	return a.Offset(origin)
 }
 
+// ScaleInPlace масштабирует матрицу на месте.
+// origin задаёт точку, относительно которой выполняется масштабирование.
+// factor задаёт коэффициенты масштабирования по X и Y.
+func (a *Affine2D) ScaleInPlace(origin, factor Point) {
+	*a = a.Scale(origin, factor)
+}
+
 // Rotate выполняет вращение матрицы вокруг заданной точки на указанный угол.
 // origin задаёт точку, вокруг которой выполняется вращение.
 // radians задаёт угол вращения в радианах.
@@ -57,6 +71,13 @@ func (a Affine2D) Rotate(origin Point, radians float32) Affine2D {
 	a = a.Offset(origin.Mul(-1)) // сдвигаем в начало
 	a = a.rotate(radians)        // вращаем
 	return a.Offset(origin)      // возвращаем в исходное положение
+}
+
+// RotateInPlace вращает матрицу на месте.
+// origin задаёт точку, относительно которой выполняется вращение.
+// radians задаёт угол вращения в радианах.
+func (a *Affine2D) RotateInPlace(origin Point, radians float32) {
+	*a = a.Rotate(origin, radians)
 }
 
 // Shear выполняет наклон матрицы под заданными углами относительно указанной точки.
