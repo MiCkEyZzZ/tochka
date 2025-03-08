@@ -1,6 +1,6 @@
 ## tochka — пакет для двумерных точек и аффинных преобразований.
 
-[![godoc](https://godoc.org/github.com/go-pkgz/tochka?status.svg)](https://pkg.go.dev/github.com/MiCkEyZzZ/tochka?tab=doc)
+[![godoc](https://godoc.org/github.com/MiCkEyZzZ/tochka?status.svg)](https://pkg.go.dev/github.com/MiCkEyZzZ/tochka?tab=doc)
 
 `tochka` — это пакет на языке Go, которая предоставляет функционал для работы
 с двухмерными точками и матрицами аффинных преобразований. Этот пакет идеально
