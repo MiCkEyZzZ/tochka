@@ -1,41 +1,41 @@
-## tochka — пакет для двумерных точек и аффинных преобразований.
+## tochka — a package for 2D points and affine transformations
 
 [![godoc](https://godoc.org/github.com/MiCkEyZzZ/tochka?status.svg)](https://pkg.go.dev/github.com/MiCkEyZzZ/tochka?tab=doc)
 
-`tochka` — это пакет на языке Go, которая предоставляет функционал для работы
-с двухмерными точками и матрицами аффинных преобразований. Этот пакет идеально
-подходит для графических приложений, обработки геометрии и других задач,
-связанных с 2М-пространством.
+`tochka` is a Go package that provides functionality for working with
+2D points and affine transformation matrices. This package is ideal for
+graphical applications, geometry processing, and other tasks related to
+2D space.
 
-## Особенности
+## Features
 
-- **Работа с точками:**
-  - Операции сложения, вычитания, умножения и деления.
-  - Округление координат до целых чисел.
-  - Вычисление скалярного произведения (`Dot`).
-  - Вычисление псевдовекторного произведения (`Cross`).
-  - Нахождение длины вектора (`Magnitude`).
-  - Удобное строковое представление точек в формате `(X, Y)`.
+- **Working with Points:**
+  - Operations for addition, subtraction, multiplication, and division.
+  - Rounding coordinates to integers.
+  - Calculating the dot product (`Dot`).
+  - Calculating the pseudovector product (`Cross`).
+  - Finding the length of a vector (`Magnitude`).
+  - Convenient string representation of points in the format `(X, Y)`.
 
-- **Аффинные преобразования:**
-  - Операции сдвига, масштабирования, вращения и наклона (shear).
-  - Комбинирование преобразований с помощью умножения матриц.
-  - Инверсия матрицы преобразования.
-  - Применение преобразований к двумерным точкам.
+- **Affine Transformations:**
+  - Operations for translation, scaling, rotation, and shear.
+  - Combining transformations using matrix multiplication.
+  - Inverting the transformation matrix.
+  - Applying transformations to 2D points.
 
-- Простое и интуитивное API для разработчиков.
+- A simple and intuitive API for developers.
 
-## Установка
+## Installation
 
-Для установки пакета используйте команду:
+To install the package, use the following command:
 
 ```zsh
 go get github.com/MiCkEyZzZ/tochka
 ```
 
-## Пример использования
+## Example Usage
 
-### Работа с точками
+### Working with Points
 
 ```go
 package main
@@ -51,14 +51,14 @@ func main() {
 	p2 := tochka.NewPoint(1.2, -0.5)
 
 	sum := p1.Add(p2)
-	fmt.Println("Сумма точек:", sum)  // Сумма точек: (3.700000, 3.200000)
+	fmt.Println("Sum of points:", sum)  // Sum of points: (3.700000, 3.200000)
 
 	rounded := sum.Round()
-	fmt.Println("Округленные координаты: ", rounded)  // Округленные координаты: (4, 3)
+	fmt.Println("Rounded coordinates:", rounded)  // Rounded coordinates: (4, 3)
 }
 ```
 
-### Аффинные преобразования
+### Affine Transformations
 
 ```go
 package main
@@ -70,47 +70,47 @@ import (
 )
 
 func main() {
-	transform := tochka.NewAffine2D(1, 0, 10, 0, 1, 20) // Сдвиг на (10, 20)
+	transform := tochka.NewAffine2D(1, 0, 10, 0, 1, 20) // Translation by (10, 20)
 
 	point := tochka.NewPoint(5, 5)
 	transformed := transform.Transform(point)
 
-	fmt.Println("Исходная точка:", point)  // Исходная точка: (5.000000, 5.000000)
-	fmt.Println("После преобразования:", transformed)  // После преобразования: (15.000000, 25.000000)
+	fmt.Println("Original point:", point)  // Original point: (5.000000, 5.000000)
+	fmt.Println("After transformation:", transformed)  // After transformation: (15.000000, 25.000000)
 }
 ```
 
 ## API
 
-Пакет предоставляет следующие ключевые методы для работы с точками и аффинными преобразованиями:
+The package provides the following key methods for working with points and affine transformations:
 
-### Для типа `Point`:
+### For the `Point` type:
 
-- `NewPoint(x, y float32) Point`: Создаёт точку с заданными координатами.
-- `Add(other Point) Point`: Складывает текущую точку с другой.
-- `Sub(other Point) Point`: Вычитает другую точку из текущей.
-- `Mul(scale Point) Point`: Умножает координаты точки на коэффициенты.
-- `Div(scale Point) (Point, error)`: Делит координаты точки, возвращая ошибку при делении на 0.
-- `Round() Point`: Округляет координаты до ближайших целых.
-- `Dot(other Point) float32`: Вычисляет скалярное произведение двух векторов.
-- `Cross(other Point) float32`: Вычисляет псевдовекторное произведение (детерминант) двух векторов.
-- `Magnitude() float32`: Возвращает длину вектора.
+- `NewPoint(x, y float32) Point`: Creates a point with the specified coordinates.
+- `Add(other Point) Point`: Adds the current point to another.
+- `Sub(other Point) Point`: Subtracts another point from the current one.
+- `Mul(scale Point) Point`: Multiplies the point coordinates by the given scale.
+- `Div(scale Point) (Point, error)`: Divides the point coordinates, returning an error when dividing by 0.
+- `Round() Point`: Rounds the coordinates to the nearest integers.
+- `Dot(other Point) float32`: Computes the dot product of two vectors.
+- `Cross(other Point) float32`: Computes the pseudovector product (determinant) of two vectors.
+- `Magnitude() float32`: Returns the length of the vector.
 
-### Для типа `Affine2D`:
+### For the `Affine2D` type:
 
-- `NewAffine2D(sx, hx, ox, hy, sy, oy float32) Affine2D`: Создаёт аффинное преобразование.
-- `Offset(offset Point) Affine2D`: Выполняет сдвиг матрицы на указанный вектор.
-- `Scale(origin, factor Point) Affine2D`: Масштабирует относительно заданной точки.
-- `Rotate(origin Point, radians float32) Affine2D`: Вращает точку на угол в радианах.
-- `Shear(origin Point, radiansX, radiansY float32) Affine2D`: Применяет наклон (shear).
-- `Mul(other Affine2D) Affine2D`: Умножает матрицы для комбинирования преобразований.
-- `Invert() Affine2D`: Вычисляет обратное преобразование.
-- `Transform(p Point) Point`: Применяет преобразование к точке.
-- `Elems() (sx, hx, ox, hy, sy, oy float32)`: Возвращает элементы матрицы.
-- `Split() (Affine2D, Point)`: Разделяет преобразование на матрицу и вектор сдвига.
+- `NewAffine2D(sx, hx, ox, hy, sy, oy float32) Affine2D`: Creates an affine transformation.
+- `Offset(offset Point) Affine2D`: Shifts the matrix by the specified vector.
+- `Scale(origin, factor Point) Affine2D`: Scales relative to the specified point.
+- `Rotate(origin Point, radians float32) Affine2D`: Rotates a point by the given angle in radians.
+- `Shear(origin Point, radiansX, radiansY float32) Affine2D`: Applies a shear transformation.
+- `Mul(other Affine2D) Affine2D`: Multiplies matrices to combine transformations.
+- `Invert() Affine2D`: Computes the inverse of the transformation.
+- `Transform(p Point) Point`:  Applies the transformation to a point.
+- `Elems() (sx, hx, ox, hy, sy, oy float32)`: Returns the matrix elements.
+- `Split() (Affine2D, Point)`: Splits the transformation into a matrix and a translation vector.
 
-Полный список методов и их описание можно найти в [документации](https://pkg.go.dev/github.com/MiCkEyZzZ/tochka).
+The full list of methods and their descriptions can be found in the [documentation](https://pkg.go.dev/github.com/MiCkEyZzZ/tochka).
 
-## Лицензия
+## License
 
-Этот проект распространяется под лицензией MIT. Полный текст лицензии доступен в файле [ЛИЦЕНЗИЯ](./LICENSE).
+This project is licensed under the MIT License. The full license text is available in the [License](./LICENSE).
