@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-// TestNewAffine2D проверяет, что конструктор создает корректное преобразование.
+// TestNewAffine2D tests that the constructor creates the correct transformation.
 func TestNewAffine2D(t *testing.T) {
 	a := NewAffine2D(1, 0, 0, 0, 1, 0)
 	expected := Affine2D{0, 0, 0, 0, 0, 0}
@@ -14,7 +14,7 @@ func TestNewAffine2D(t *testing.T) {
 	}
 }
 
-// TestAffine2D_Offset проверяет корректность смещения по осям X и Y.
+// TestAffine2D_Offset tests the correctness of offsetting along the X and Y axes.
 func TestAffine2D_Offset(t *testing.T) {
 	a := NewAffine2D(1, 0, 0, 0, 1, 0)
 	offset := Point{X: 2, Y: 3}
@@ -24,7 +24,7 @@ func TestAffine2D_Offset(t *testing.T) {
 	}
 }
 
-// TestAffine2D_Scale проверяет, что масштабирование корректно меняет коэффициенты.
+// TestAffine2D_Scale tests that scaling correctly modifies the coefficients.
 func TestAffine2D_Scale(t *testing.T) {
 	a := NewAffine2D(1, 0, 0, 0, 1, 0)
 	origin := Point{X: 0, Y: 0}
@@ -35,18 +35,18 @@ func TestAffine2D_Scale(t *testing.T) {
 	}
 }
 
-// TestAffine2D_Rotate проверяет вращение на 45 градусов.
+// TestAffine2D_Rotate tests a 45-degree rotation.
 func TestAffine2D_Rotate(t *testing.T) {
 	a := NewAffine2D(1, 0, 0, 0, 1, 0)
 	origin := Point{X: 0, Y: 0}
-	radians := float32(math.Pi / 4) // 45 градусов
+	radians := float32(math.Pi / 4) // 45 degrees
 	result := a.Rotate(origin, radians)
 	if math.Abs(float64(result.a+1)-math.Cos(math.Pi/4)) > 1e-6 {
 		t.Errorf("Rotate failed. Expected a + 1 close to %v, got %v", math.Cos(math.Pi/4), result.a+1)
 	}
 }
 
-// TestAffine2D_Invert проверяет инверсию матрицы, сравнивая с ожидаемыми значениями.
+// TestAffine2D_Invert tests matrix inversion by comparing with expected values.
 func TestAffine2D_Invert(t *testing.T) {
 	a := NewAffine2D(2, 0, 0, 0, 2, 0)
 	inv := a.Invert()
@@ -56,7 +56,7 @@ func TestAffine2D_Invert(t *testing.T) {
 	}
 }
 
-// TestAffine2D_Transform проверяет применение преобразования к точке.
+// TestAffine2D_Transform tests applying the transformation to a point.
 func TestAffine2D_Transform(t *testing.T) {
 	a := NewAffine2D(1, 0, 1, 0, 1, 1)
 	p := Point{X: 2, Y: 2}
@@ -67,7 +67,7 @@ func TestAffine2D_Transform(t *testing.T) {
 	}
 }
 
-// TestAffine2D_Mul умножение двух матриц для проверки работы метода Mul().
+// TestAffine2D_Mul tests matrix multiplication by verifying the Mul() method.
 func TestAffine2D_Mul(t *testing.T) {
 	a := NewAffine2D(4, 0, 3, 0, 4, 3)
 	b := NewAffine2D(2, 0, 2, 0, 2, 2)
@@ -79,7 +79,7 @@ func TestAffine2D_Mul(t *testing.T) {
 	}
 }
 
-// TestSplit проверяет метод Split() для разделения матрицы на линейную часть и смещение.
+// TestSplit tests the Split() method to separate the matrix into linear part and offset.
 func TestSplit(t *testing.T) {
 	a := NewAffine2D(2, 1, 3, 1, 2, 4)
 	mat, off := a.Split()
@@ -90,7 +90,7 @@ func TestSplit(t *testing.T) {
 	}
 }
 
-// TestShear проверяет метод Shear() для наклона матрицы.
+// TestShear tests the Shear() method for matrix shearing.
 func TestShare(t *testing.T) {
 	a := NewAffine2D(1, 0, 0, 0, 1, 0)
 	b := a.Shear(Point{X: 0, Y: 0}, float32(math.Pi/6), float32(math.Pi/6))
@@ -99,7 +99,7 @@ func TestShare(t *testing.T) {
 	}
 }
 
-// TestElems проверяет метод Elems() для получения элементов матрицы.
+// TestElems tests the Elems() method for retrieving the elements of the matrix.
 func TestElems(t *testing.T) {
 	a := NewAffine2D(2, 1, 3, 1, 2, 4)
 	sx, hx, ox, hy, sy, oy := a.Elems()
@@ -108,7 +108,7 @@ func TestElems(t *testing.T) {
 	}
 }
 
-// TestAffineString проверяет метод String() для строкового представления матрицы.
+// TestAffineString tests the String() method for the string representation of the matrix.
 func TestAffineString(t *testing.T) {
 	a := NewAffine2D(1, 0, 2, 0, 1, 3)
 	str := a.String()
@@ -118,7 +118,7 @@ func TestAffineString(t *testing.T) {
 	}
 }
 
-// almostEqual сравнивает два значения с учётом заданной точности.
+// almostEqual compares two values within a given precision.
 func almostEqual(a, b float32, epsilon float32) bool {
 	return math.Abs(float64(a-b)) < float64(epsilon)
 }

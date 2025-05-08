@@ -6,17 +6,17 @@ import (
 	"strings"
 )
 
-// Affine2D представляет аффинное преобразование в двумерной системе координат.
-// Содержит элементы матрицы преобразования, которые позволяют выполнять операции
-// сдвига, масштабирования, вращения и наклона.
+// Affine2D represents an affine transformation in a 2D coordinate system.
+// It contains the elements of the transformation matrix that allow performing operations
+// such as translation, scaling, rotation, and shear.
 type Affine2D struct {
 	a, b, c float32
 	d, e, f float32
 }
 
-// NewAffine2D создаёт новое аффинное преобразование.
-// sx, hx, ox — элементы первой строки матрицы (масштаб по X, наклон по X, перенос по X).
-// hy, sy, oy — элементы второй строки матрицы (наклон по Y, масштаб по Y, перенос по Y).
+// NewAffine2D creates a new affine transformation.
+// sx, hx, ox are elements of the first row of the matrix (scaling along X, shear along X, translation along X).
+// hy, sy, oy are elements of the second row of the matrix (shear along Y, scaling along Y, translation along Y).
 func NewAffine2D(sx, hx, ox, hy, sy, oy float32) Affine2D {
 	return Affine2D{
 		a: sx - 1, b: hx, c: ox,
@@ -24,26 +24,26 @@ func NewAffine2D(sx, hx, ox, hy, sy, oy float32) Affine2D {
 	}
 }
 
-// Offset выполняет сдвиг матрицы преобразования на заданный вектор.
-// offset определяет величину сдвига по X и Y.
+// Offset performs a translation on the transformation matrix by a given vector.
+// offset defines the amount of translation along X and Y.
 func (a Affine2D) Offset(offset Point) Affine2D {
 	return Affine2D{
-		a.a, a.b, a.c + offset.X, // сдвиг по оси Х
-		a.d, a.e, a.f + offset.Y, // сдвиг по оси Y
+		a.a, a.b, a.c + offset.X, // translation along X
+		a.d, a.e, a.f + offset.Y, // translation along Y
 	}
 }
 
-// OffsetInPlace сдвигает матрицу на месте.
-// offset определяет величину сдвига по осям X и Y.
+// OffsetInPlace translates the matrix in place.
+// offset defines the amount of translation along X and Y.
 func (a *Affine2D) OffsetInPlace(offset Point) {
 	a.c += offset.X
 	a.f += offset.Y
 }
 
-// Scale выполняет масштабирование матрицы относительно заданной точки.
-// origin задаёт точку, вокруг которой выполняется масштабирование.
-// factor задаёт коэффициенты масштабирования по X и Y.
-// Возвращает новую матрицу преобразования с учетом масштабирования.
+// Scale performs scaling on the matrix relative to a given point.
+// origin defines the point around which scaling occurs.
+// factor defines the scaling factors along X and Y.
+// Returns a new transformation matrix that takes scaling into account.
 func (a Affine2D) Scale(origin, factor Point) Affine2D {
 	if origin == (Point{}) {
 		return a.scale(factor)
@@ -53,49 +53,49 @@ func (a Affine2D) Scale(origin, factor Point) Affine2D {
 	return a.Offset(origin)
 }
 
-// ScaleInPlace масштабирует матрицу на месте.
-// origin задаёт точку, относительно которой выполняется масштабирование.
-// factor задаёт коэффициенты масштабирования по X и Y.
+// ScaleInPlace scales the matrix in place.
+// origin defines the point relative to which scaling occurs.
+// factor defines the scaling factors along X and Y.
 func (a *Affine2D) ScaleInPlace(origin, factor Point) {
 	*a = a.Scale(origin, factor)
 }
 
-// Rotate выполняет вращение матрицы вокруг заданной точки на указанный угол.
-// origin задаёт точку, вокруг которой выполняется вращение.
-// radians задаёт угол вращения в радианах.
-// Возвращает новую матрицу преобразования с учетом вращения.
+// Rotate performs a rotation on the matrix around a given point by a specified angle.
+// origin defines the point around which the rotation occurs.
+// radians defines the angle of rotation in radians.
+// Returns a new transformation matrix that takes rotation into account.
 func (a Affine2D) Rotate(origin Point, radians float32) Affine2D {
 	if origin == (Point{}) {
 		return a.rotate(radians)
 	}
-	a = a.Offset(origin.Mul(-1)) // сдвигаем в начало
-	a = a.rotate(radians)        // вращаем
-	return a.Offset(origin)      // возвращаем в исходное положение
+	a = a.Offset(origin.Mul(-1)) // shift to origin
+	a = a.rotate(radians)        // rotate
+	return a.Offset(origin)      // return to original position
 }
 
-// RotateInPlace вращает матрицу на месте.
-// origin задаёт точку, относительно которой выполняется вращение.
-// radians задаёт угол вращения в радианах.
+// RotateInPlace rotates the matrix in place.
+// origin defines the point relative to which rotation occurs.
+// radians defines the angle of rotation in radians.
 func (a *Affine2D) RotateInPlace(origin Point, radians float32) {
 	*a = a.Rotate(origin, radians)
 }
 
-// Shear выполняет наклон матрицы под заданными углами относительно указанной точки.
-// origin задаёт точку, относительно которой выполняется наклон.
-// radiansX и radiansY задают углы наклона по осям X и Y соответственно.
-// Возвращает новую матрицу преобразования с учетом наклона.
+// Shear performs a shear transformation on the matrix under given angles relative to a specified point.
+// origin defines the point relative to which shearing occurs.
+// radiansX and radiansY define the shear angles along the X and Y axes, respectively.
+// Returns a new transformation matrix that takes shear into account.
 func (a Affine2D) Shear(origin Point, radiansX, radiansY float32) Affine2D {
 	if origin == (Point{}) {
 		return a.shear(radiansX, radiansY)
 	}
-	a = a.Offset(origin.Mul(-1))    // сдвигаем систему координат
-	a = a.shear(radiansX, radiansY) // применяем наклон
-	return a.Offset(origin)         // возвращаем в исходное положение
+	a = a.Offset(origin.Mul(-1))    // shift the coordinate system
+	a = a.shear(radiansX, radiansY) // apply shear
+	return a.Offset(origin)         // return to original position
 }
 
-// Mul выполняет умножение текущей матрицы на другую матрицу.
-// B — другая матрица преобразования.
-// Возвращает результат умножения.
+// Mul multiplies the current matrix by another matrix.
+// B is the other transformation matrix.
+// Returns the result of the multiplication.
 func (A Affine2D) Mul(B Affine2D) (r Affine2D) {
 	r.a = (A.a+1)*(B.a+1) + A.b*B.d - 1
 	r.b = (A.a+1)*B.b + A.b*(B.e+1)
@@ -106,8 +106,8 @@ func (A Affine2D) Mul(B Affine2D) (r Affine2D) {
 	return r
 }
 
-// Invert вычисляет обратное преобразование для текущей матрицы.
-// Если матрица близка к сингулярной, результаты могут быть неточными.
+// Invert computes the inverse transformation for the current matrix.
+// If the matrix is close to singular, the results may be inaccurate.
 func (a Affine2D) Invert() Affine2D {
 	if math.Abs(float64(a.a)) < 1e-6 && math.Abs(float64(a.b)) < 1e-6 &&
 		math.Abs(float64(a.d)) < 1e-6 && math.Abs(float64(a.e)) < 1e-6 {
@@ -117,7 +117,7 @@ func (a Affine2D) Invert() Affine2D {
 	a.e += 1
 	det := a.a*a.e - a.b*a.d
 	if math.Abs(float64(det)) < 1e-6 {
-		return Affine2D{} // матрица сингулярна
+		return Affine2D{} // matrix is singular
 	}
 	a.a, a.e = a.e/det, a.a/det
 	a.b, a.d = -a.b/det, -a.d/det
@@ -129,8 +129,8 @@ func (a Affine2D) Invert() Affine2D {
 	return a
 }
 
-// Transform применяет текущее преобразование к заданной точке.
-// p — точка, к которой применяется преобразование.
+// Transform applies the current transformation to a given point.
+// p is the point to which the transformation is applied.
 func (a Affine2D) Transform(p Point) Point {
 	return Point{
 		X: p.X*(a.a+1) + p.Y*a.b + a.c,
@@ -138,13 +138,13 @@ func (a Affine2D) Transform(p Point) Point {
 	}
 }
 
-// Elems возвращает элементы матрицы преобразования.
+// Elems returns the elements of the transformation matrix.
 func (a Affine2D) Elems() (sx, hx, ox, hy, sy, oy float32) {
 	return a.a + 1, a.b, a.c, a.d, a.e + 1, a.f
 }
 
-// Split разделяет преобразование на матрицу без сдвига и вектор сдвига.
-// Возвращает новую матрицу и вектор сдвига.
+// Split splits the transformation into a matrix without translation and a translation vector.
+// Returns a new matrix and a translation vector.
 func (a Affine2D) Split() (src Affine2D, offset Point) {
 	return Affine2D{
 		a: a.a, b: a.b, c: 0,
@@ -152,42 +152,42 @@ func (a Affine2D) Split() (src Affine2D, offset Point) {
 	}, Point{X: a.c, Y: a.f}
 }
 
-// scale выполняет внутреннее масштабирование текущей матрицы.
-// factor задаёт коэффициенты масштабирования.
+// scale performs internal scaling of the current matrix.
+// factor defines the scaling factors.
 func (a Affine2D) scale(factor Point) Affine2D {
 	return Affine2D{
-		(a.a+1)*factor.X - 1, a.b * factor.X, a.c * factor.X, // масштабируем по X
-		a.d * factor.Y, (a.e+1)*factor.Y - 1, a.f * factor.Y, // масштабируем по Y
+		(a.a+1)*factor.X - 1, a.b * factor.X, a.c * factor.X, // scale along X
+		a.d * factor.Y, (a.e+1)*factor.Y - 1, a.f * factor.Y, // scale along Y
 	}
 }
 
-// rotate выполняет внутреннее вращение матрицы на указанный угол.
-// radians задаёт угол вращения в радианах.
+// rotate performs internal rotation of the matrix by the specified angle.
+// radians defines the angle of rotation in radians.
 func (a Affine2D) rotate(radians float32) Affine2D {
 	// находим синус и косинус
 	sin, cos := math.Sincos(float64(radians))
 	s, c := float32(sin), float32(cos)
 	return Affine2D{
-		(a.a+1)*c - a.d*s - 1, a.b*c - (a.e+1)*s, a.c*c - a.f*s, // применяем вращение
-		(a.a+1)*s + a.d*c, a.b*s + (a.e+1)*c - 1, a.c*s + a.f*c, // обновляем элементы для сдвига по Y
+		(a.a+1)*c - a.d*s - 1, a.b*c - (a.e+1)*s, a.c*c - a.f*s, // apply rotation
+		(a.a+1)*s + a.d*c, a.b*s + (a.e+1)*c - 1, a.c*s + a.f*c, // update elements for translation along Y
 	}
 }
 
-// shear выполняет внутренний наклон матрицы под заданными углами.
-// radiansX и radiansY задают углы наклона по осям X и Y.
+// shear performs internal shearing of the matrix under given angles.
+// radiansX and radiansY define the shear angles along the X and Y axes.
 func (a Affine2D) shear(radiansX, radiansY float32) Affine2D {
 	// вычисляем тангенсы углов для сдвига.
 	tx := float32(math.Tan(float64(radiansX)))
 	ty := float32(math.Tan(float64(radiansY)))
 
 	return Affine2D{
-		(a.a + 1) + a.d*tx - 1, a.b + (a.e+1)*tx, a.c + a.f*tx, // обновляем элементы для сдвига по X
-		(a.a+1)*ty + a.d, a.b*ty + (a.e + 1) - 1, a.c*ty + a.f, // обновляем элементы для сдвига по Y
+		(a.a + 1) + a.d*tx - 1, a.b + (a.e+1)*tx, a.c + a.f*tx, // update elements for shifting along X
+		(a.a+1)*ty + a.d, a.b*ty + (a.e + 1) - 1, a.c*ty + a.f, // update elements for shifting along Y
 	}
 }
 
-// String возвращает строковое представление матрицы преобразования.
-// Формат: "[[sx hx ox] [hy sy oy]]".
+// String returns the string representation of the transformation matrix.
+// Format: "[[sx hx ox] [hy sy oy]]".
 func (a Affine2D) String() string {
 	sx, hx, ox, hy, sy, oy := a.Elems()
 	var b strings.Builder

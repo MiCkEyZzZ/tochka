@@ -7,62 +7,62 @@ import (
 	"math"
 )
 
-// Point представляет точку в двумерной системе координат с координатами X и Y.
+// Point represents a point in a two-dimensional coordinate system with X and Y coordinates.
 type Point struct {
 	X, Y float32
 }
 
-// NewPoint создаёт и возвращает новую точку с заданными координатами x и y.
+// NewPoint creates and returns a new point with the specified x and y coordinates.
 func NewPoint(x, y float32) Point {
 	return Point{X: x, Y: y}
 }
 
-// Add возвращает новую точку, полученную сложением текущей точки с другой.
+// Add returns a new point obtained by adding the current point to another.
 func (p Point) Add(point Point) Point {
 	return Point{X: p.X + point.X, Y: p.Y + point.Y}
 }
 
-// Sub возвращает новую точку, координаты которой равны разности текущей точки и другой.
+// Sub returns a new point whose coordinates are the difference between the current point and another.
 func (p Point) Sub(point Point) Point {
 	return Point{X: p.X - point.X, Y: p.Y - point.Y}
 }
 
-// Mul возвращает новую точку с координатами, умноженными на заданный множитель s.
+// Mul returns a new point with coordinates multiplied by a given factor s.
 func (p Point) Mul(s float32) Point {
 	return Point{X: p.X * s, Y: p.Y * s}
 }
 
-// Div возвращает новую точку с координатами, разделенными на заданный коэффициент s.
+// Div returns a new point with coordinates divided by a given factor s.
 func (p Point) Div(s float32) (Point, error) {
 	if s == 0 {
-		return Point{}, errors.New("деление на ноль")
+		return Point{}, errors.New("division by zero")
 	}
 	return Point{X: p.X / s, Y: p.Y / s}, nil
 }
 
-// Distance возвращает расстояние между текущей точкой и заданной точкой.
+// Distance returns the distance between the current point and a given point.
 func (p Point) Distance(point Point) float32 {
 	dx := p.X - point.X
 	dy := p.Y - point.Y
 	return float32(math.Sqrt(float64(dx*dx + dy*dy)))
 }
 
-// Dot возвращает скалярное произведение двух векторов.
+// Dot returns the dot product of two vectors.
 func (p Point) Dot(point Point) float32 {
 	return p.X*point.X + p.Y*point.Y
 }
 
-// Cross возвращает псевдовекторное произведение (детерминант) двух векторов в 2М.
+// Cross returns the pseudovector (determinant) product of two vectors in 2D.
 func (p Point) Cross(point Point) float32 {
 	return p.X*point.Y - p.Y*point.X
 }
 
-// Magnitude возвращает длину вектора.
+// Magnitude returns the length of the vector.
 func (p Point) Magnitude() float32 {
 	return float32(math.Sqrt(float64(p.X*p.X + p.Y*p.Y)))
 }
 
-// Round округляет координаты точки до ближайших целых значений и возвращает объект image.Point.
+// Round rounds the point's coordinates to the nearest integers and returns an image.Point object.
 func (p Point) Round() image.Point {
 	return image.Point{
 		X: int(math.Round(float64(p.X))),
@@ -70,7 +70,7 @@ func (p Point) Round() image.Point {
 	}
 }
 
-// String возвращает строковое представление точки в формате "(X, Y)".
+// String returns a string representation of the point in the format "(X, Y)".
 func (p Point) String() string {
 	return fmt.Sprintf("(%.6f, %.6f)", p.X, p.Y)
 }

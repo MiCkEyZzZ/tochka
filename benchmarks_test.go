@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-// BenchmarkSplit измеряет производительность метода Split().
+// BenchmarkSplit measures the performance of the Split() method.
 func BenchmarkSplit(b *testing.B) {
 	a := NewAffine2D(2, 1, 3, 1, 2, 4)
 	b.ResetTimer()
@@ -14,7 +14,7 @@ func BenchmarkSplit(b *testing.B) {
 	}
 }
 
-// BenchmarkShear измеряет производительность метода Share().
+// BenchmarkShear measures the performance of the Shear() method.
 func BenchmarkShear(b *testing.B) {
 	a := NewAffine2D(1, 0, 0, 0, 1, 0)
 	b.ResetTimer()
@@ -23,7 +23,7 @@ func BenchmarkShear(b *testing.B) {
 	}
 }
 
-// BenchmarkElems измеряет производительность метода Elems().
+// BenchmarkElems measures the performance of the Elems() method.
 func BenchmarkElems(b *testing.B) {
 	a := NewAffine2D(2, 1, 3, 1, 2, 4)
 	b.ResetTimer()
@@ -32,7 +32,7 @@ func BenchmarkElems(b *testing.B) {
 	}
 }
 
-// BenchmarkAffineString измеряет производительность метода String().
+// BenchmarkAffineString measures the performance of the String() method.
 func BenchmarkAffineString(b *testing.B) {
 	a := NewAffine2D(1, 0, 2, 0, 1, 3)
 	b.ResetTimer()

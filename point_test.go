@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-// TestNewPoint проверяет создание новой точки с заданными координатами.
+// TestNewPoint checks the creation of a new point with the specified coordinates.
 func TestNewPoint(t *testing.T) {
 	p := NewPoint(1.5, 2.5)
 	if p.X != 1.5 || p.Y != 2.5 {
@@ -13,7 +13,7 @@ func TestNewPoint(t *testing.T) {
 	}
 }
 
-// TestAdd проверяет сложение двух точек.
+// TestAdd checks the addition of two points.
 func TestAdd(t *testing.T) {
 	p1 := NewPoint(1, 2)
 	p2 := NewPoint(3, 4)
@@ -25,7 +25,7 @@ func TestAdd(t *testing.T) {
 	}
 }
 
-// TestSub проверяет вычитание одной точки из другой.
+// TestSub checks the subtraction of one point from another.
 func TestSub(t *testing.T) {
 	p1 := NewPoint(5, 7)
 	p2 := NewPoint(2, 3)
@@ -37,7 +37,7 @@ func TestSub(t *testing.T) {
 	}
 }
 
-// TestMul проверяет умножение точки на скаляр.
+// TestMul checks the multiplication of a point by a scalar.
 func TestMul(t *testing.T) {
 	p1 := NewPoint(2, 3)
 	result := p1.Mul(2)
@@ -48,7 +48,7 @@ func TestMul(t *testing.T) {
 	}
 }
 
-// TestDiv проверяет деление точки на скаляр, включая проверку на деление на ноль.
+// TestDiv checks the division of a point by a scalar, including division by zero.
 func TestDiv(t *testing.T) {
 	p := NewPoint(4, 6)
 	result, err := p.Div(2)
@@ -66,7 +66,7 @@ func TestDiv(t *testing.T) {
 	}
 }
 
-// TestRound проверяет округление точки, включая случай с отрицательными значениями.
+// TestRound checks the rounding of a point, including cases with negative values.
 func TestRound(t *testing.T) {
 	p := NewPoint(1.5, 2.5)
 	result := p.Round()
@@ -83,7 +83,7 @@ func TestRound(t *testing.T) {
 	}
 }
 
-// TestString проверяем, что строковое представление соответствует ожидаемому формату, включая случай, когда координаты равны нулю.
+// TestString checks that the string representation matches the expected format, including when the coordinates are zero.
 func TestString(t *testing.T) {
 	p := NewPoint(1.234567, 2.345678)
 	result := p.String()
@@ -100,7 +100,7 @@ func TestString(t *testing.T) {
 	}
 }
 
-// TestDot проверяет вычисление скалярного произведения двух точек.
+// TestDot checks the calculation of the dot product of two points.
 func TestDot(t *testing.T) {
 	p1 := NewPoint(1, 2)
 	p2 := NewPoint(3, 4)
@@ -112,7 +112,7 @@ func TestDot(t *testing.T) {
 	}
 }
 
-// TestCross проверяет вычисление псевдовекторного произведения (детерминанта) двух точек.
+// TestCross checks the calculation of the pseudovector product (determinant) of two points.
 func TestCross(t *testing.T) {
 	p1 := NewPoint(1, 2)
 	p2 := NewPoint(3, 4)
@@ -124,7 +124,7 @@ func TestCross(t *testing.T) {
 	}
 }
 
-// TestMagnitude проверяет вычисление длины вектора.
+// TestMagnitude checks the calculation of the vector's length.
 func TestMagnitude(t *testing.T) {
 	p := NewPoint(3, 4)
 	res := p.Magnitude()

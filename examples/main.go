@@ -7,54 +7,54 @@ import (
 )
 
 func main() {
-	// Создание новых точек.
+	// Creating new points.
 	p1 := tochka.NewPoint(2.5, 3.5)
 	p2 := tochka.NewPoint(1.0, 1.0)
 
-	fmt.Println("Точка 1:", p1)
-	fmt.Println("Точка 2:", p2)
+	fmt.Println("Point 1:", p1)
+	fmt.Println("Point 2:", p2)
 
-	// Операция с точками
+	// Operations with points
 	sum := p1.Add(p2)
-	fmt.Println("Сумма точек:", sum)
+	fmt.Println("Sum of points:", sum)
 
 	diff := p1.Sub(p2)
-	fmt.Println("Разность точек:", diff)
+	fmt.Println("Difference of points:", diff)
 
 	scaled := p1.Mul(2.0)
-	fmt.Println("Масштабирование точки 1 и 2:", scaled)
+	fmt.Println("Scaling of point 1 by 2:", scaled)
 
 	divided, err := p1.Div(2.0)
 	if err != nil {
-		fmt.Println("Ошибка при делении:", err)
+		fmt.Println("Error during division:", err)
 	} else {
-		fmt.Println("Точка 1, разделённая на 2:", divided)
+		fmt.Println("Point 1 divided by 2:", divided)
 	}
 
-	// Расстояние между точками
+	// Distance between points
 	dist := p1.Distance(p2)
-	fmt.Printf("Расстояние между точкой 1 и точкой 2: %.2f\n", dist)
+	fmt.Printf("Distance between point 1 and point 2: %.2f\n", dist)
 
-	// Округление координат
+	// Rounding coordinates
 	rounded := p1.Round()
-	fmt.Println("Точка 1 с округлёнными координатами:", rounded)
+	fmt.Println("Point 1 with rounded coordinates:", rounded)
 
-	// Строковое представление точки
-	fmt.Println("Строковое представление точки 1:", p1)
+	// String representation of the point
+	fmt.Println("String representation of point 1:", p1)
 
-	// Скалярное произведение
+	// Dot product
 	dotProduct := p1.Dot(p2)
-	fmt.Println("Скалярное произведение:", dotProduct)
+	fmt.Println("Dot product:", dotProduct)
 
-	// Псевдовекторное произведение
+	// Cross product
 	crossProduct := p1.Cross(p2)
-	fmt.Println("Псевдовекторное произведение:", crossProduct)
+	fmt.Println("Cross product:", crossProduct)
 
-	// Длина вектора p1
+	// Magnitude of vector p1
 	magnitude1 := p1.Magnitude()
-	fmt.Println("Длина вектора p1:", magnitude1)
+	fmt.Println("Magnitude of vector p1:", magnitude1)
 
-	// Длина вектора p2
+	// Magnitude of vector p2
 	magnitude2 := p2.Magnitude()
-	fmt.Println("Длина вектора p2:", magnitude2)
+	fmt.Println("Magnitude of vector p2:", magnitude2)
 }
